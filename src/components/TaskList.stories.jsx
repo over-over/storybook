@@ -16,6 +16,7 @@ export const MockedState = {
   error: null,
 };
 
+// eslint-disable-next-line react/prop-types
 const Mockstore = ({ taskboxState, children }) => (
   <Provider
     store={configureStore({
@@ -55,26 +56,52 @@ export const Default = {
 };
 
 export const WithPinnedTasks = {
-  args: {
-    tasks: [
-      ...Default.args.tasks.slice(0, 5),
-      { id: "6", title: "Task 6 (pinned)", state: "TASK_PINNED" },
-    ],
-  },
+  decorators: [
+    (story) => {
+      const pinnedtasks = [
+        ...MockedState.tasks.slice(0, 5),
+        { id: "6", title: "Task 6 (pinned)", state: "TASK_PINNED" },
+      ];
+      return (
+        <Mockstore
+          taskboxState={{
+            ...MockedState,
+            tasks: pinnedtasks,
+          }}
+        >
+          {story()}
+        </Mockstore>
+      );
+    },
+  ],
 };
 
 export const Loading = {
-  args: {
-    tasks: [],
-    loading: true,
-  },
+  decorators: [
+    (story) => (
+      <Mockstore
+        taskboxState={{
+          ...MockedState,
+          state: "loading",
+        }}
+      >
+        {story()}
+      </Mockstore>
+    ),
+  ],
 };
 
 export const Empty = {
-  args: {
-    // Shaping the stories through args composition.
-    // Inherited data coming from the Loading story.
-    ...Loading.args,
-    loading: false,
-  },
+  decorators: [
+    (story) => (
+      <Mockstore
+        taskboxState={{
+          ...MockedState,
+          tasks: [],
+        }}
+      >
+        {story()}
+      </Mockstore>
+    ),
+  ],
 };
