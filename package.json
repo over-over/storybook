@@ -28,7 +28,7 @@
     "init-msw": "msw init public/"
   },
   "stackblitz": {
-    "startCommand": "npm install && npm run storybook"
+    "startCommand": "npm install --force && npm run storybook"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1",
