@@ -27,6 +27,9 @@
     "build-storybook": "storybook build",
     "init-msw": "msw init public/"
   },
+  "stackblitz": {
+    "startCommand": "npm install && npm run storybook"
+  },
   "devDependencies": {
     "@chromatic-com/storybook": "1",
     "@storybook/addon-essentials": "8.3.2",
